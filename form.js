@@ -94,7 +94,7 @@ dateELE.addEventListener("change", () => {
 
   dateELE.style.border = "2px solid rgba(0, 0, 0, 0.4)";
   if (age < 18 || age > 55) {
-    dateELE.setCustomValidity("Your age is not lies between 18 and 55");
+    dateELE.setCustomValidity("Your age should be in between 18 and 55");
     dateELE.style.border = "2px solid red";
     return;
   } else {
