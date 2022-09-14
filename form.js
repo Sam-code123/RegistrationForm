@@ -1,118 +1,93 @@
-let form = document.getElementById("form");
-
-const retriveEntries = () => {
-  let entries = localStorage.getItem("userEntry");
-
-  if (entries) {
-    entries = JSON.parse(entries);
-  } else {
-    entries = [];
-  }
-  return entries;
-};
-
-let Entries = retriveEntries();
-
-const displayEntries = () => {
-  const entries = retriveEntries();
-
-  const rows = entries
-    .map((entry) => {
-      const name = `<td class="td">${entry.name}</td>`;
-      const email = `<td class="td">${entry.email}</td>`;
-      const password = `<td class="td">${entry.password}</td>`;
-      const dob = `<td class="td">${entry.dob}</td>`;
-      const acceptConditions = `<td class="td">${entry.acceptConditions}</td>`;
-
-      const row = `<tr>${name} ${email} ${password} ${dob} ${acceptConditions}</tr>`;
-      return row;
-    })
-    .join("\n");
-
-  let tableDiv = document.getElementById("tableDiv");
-
-  // <th class="th">Name</th> inside oneMore head for name
-  tableDiv.innerHTML = `<table class="table" border="2">
-  <tr>
-    <th class="th">Name</th>
-    <th class="th">Email</th>
-    <th class="th">Password</th>
-    <th class="th">Dob</th>
-    <th class="th">Accepted terms?</th>
-  </tr>
-    ${rows}
-  </table>`;
-};
-
-const saveUserFrom = (event) => {
-  event.preventDefault();
-
-  let name = document.getElementById("name").value;
-  let email = document.getElementById("email").value;
-  let password = document.getElementById("password").value;
-  let dob = document.getElementById("dob").value;
-  let acceptConditions = document.getElementById("agree").checked;
-
-  let entry_obj = {
-    name,
-    email,
-    password,
-    dob,
-    acceptConditions,
-  };
-
-  Entries.push(entry_obj);
-
-  localStorage.setItem("userEntry", JSON.stringify(Entries));
-
-  displayEntries();
-};
-
-form.addEventListener("submit", saveUserFrom);
-
-displayEntries();
-
-function getAge(today, birthDate) {
-
-  var age = today.getFullYear() - birthDate.getFullYear();
-  var m = today.getMonth() - birthDate.getMonth();
-  if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-    age--;
-  }
-  return age;
+function submitDetails(e) {
+    var form = document.getElementById("form");
+    var name = form.name.value;
+    var email = form.email.value;
+    var password = form.password.value;
+    var dob = form.dob.value;
+    var terms = form.terms.checked;
+    var age = calculateAge(dob);
+    if (age < 18 || age > 55) {
+        alert("You must be between 18 and 55 years old to register");
+        return false;
+    }
+    var vals = localStorage.getItem("data");
+    if (vals == null) {
+        vals = [];
+    } else {
+        vals = JSON.parse(vals);
+    }
+    vals.push({
+        name: name,
+        email: email,
+        password: password,
+        dob: dob,
+        terms: terms
+    });
+    localStorage.setItem("data", JSON.stringify(vals));
+    addRow(name, email, password, dob, terms);
+    form.name.value = "";
+    form.email.value = "";
+    form.password.value = "";
+    form.dob.value = "";
+    form.terms.checked = false;
+    return false;
 }
 
-let dateELE = document.getElementById("dob");
-
-dateELE.addEventListener("change", () => {
-  let [year, month, date] = document.getElementById("dob").value.split("-");
-
-  let dob = new Date(year, month, date);
-  let Today = new Date();
-
-  age = getAge(Today, dob);
-
-  dateELE.style.border = "2px solid rgba(0, 0, 0, 0.4)";
-  if (age < 18 || age > 55) {
-    dateELE.setCustomValidity("Your age should be in between 18 and 55");
-    dateELE.style.border = "2px solid red";
-    return;
-  } else {
-    dateELE.setCustomValidity("");
-  }
-});
-
-const email = document.getElementById("email");
-
-email.addEventListener("input", () => validate(email));
-
-function validate(ele) {
-  if (ele.validity.typeMismatch) {
-    ele.setCustomValidity("The Email is not in the right format!!!");
-    ele.reportValidity();
-  } else {
-    ele.setCustomValidity("");
-  }
+function calculateAge(dob) {
+    var today = new Date();
+    var birthDate = new Date(dob);
+    var age = today.getFullYear() - birthDate.getFullYear();
+    var m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+    }
+    return age;
 }
-const submit=document.getElementById('submit');
-    submit.addEventListener('click', () => validate(submit));
+
+function resetDetails() {
+    var confirm = window.confirm("Are you sure you want to reset the form?");
+    if (confirm) {
+        localStorage.clear();
+        var table_tbody = document.getElementById("table_tbody");
+        table_tbody.innerHTML = "";
+        var table = document.getElementById("table");
+        table.classList.add("hidden");
+        var nodata = document.getElementById("nodata");
+        nodata.classList.remove("hidden");
+        return true;
+    }
+}
+
+function addRow(name, email, password, dob, terms) {
+    var nodata = document.getElementById("nodata");
+    var table = document.getElementById("table");
+    nodata.classList.add("hidden");
+    table.classList.remove("hidden");
+    var table = document.getElementById("table");
+    h = `<td class="px-4 py-3 text-sm font-medium text-gray-900 count"></td>
+        <td class="text-sm text-gray-900 font-light px-4 py-3">` + name + `</td>
+        <td class="text-sm text-gray-900 font-light px-4 py-3">` + email + `</td>
+        <td class="text-sm text-gray-900 font-light px-4 py-3">` + password + `</td>
+        <td class="text-sm text-gray-900 font-light px-4 py-3">` + dob + `</td>
+        <td class="text-sm text-gray-900 font-light px-4 py-3 mr-12">` + ((terms)?'✅':'❌') + `</td>`;
+    rowclass = "bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100";
+    var row = table.insertRow(-1);
+    row.className = rowclass;
+    row.innerHTML = h;
+}
+
+
+window.onload = function() {
+    var data = localStorage.getItem("data");
+    if (data != null) {
+        data = JSON.parse(data);
+        for (var i = 0; i < data.length; i++) {
+            addRow(data[i].name, data[i].email, data[i].password, data[i].dob, data[i].terms);
+        }
+    } else {
+        var nodata = document.getElementById("nodata");
+        var table = document.getElementById("table");
+        nodata.classList.remove("hidden");
+        table.classList.add("hidden");
+    }
+}
