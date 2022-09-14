@@ -1,0 +1,50 @@
+body{
+    background: rgb(255, 234, 240);
+}
+h1{
+    color: rgb(245, 87, 134);
+    font-size: 40px;
+}
+.box{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 3rem;  
+    font-size:18px;
+}
+.form{
+    display: flex;
+    align-items: center;
+    padding: 20px;
+}
+.input{
+    margin-bottom: 10px;
+    padding: 10px 15px;
+    border-radius: 10px;
+    outline: none;
+    border: 2px solid rgba(0, 0, 0, 0.4);
+}
+.button{
+    background-color: rgb(3, 77, 13);
+    padding: 10px 20px;
+    border-radius: 6px;
+    margin-top: 20px;
+    margin-left: 200px;
+    color: white;
+    font-size:medium
+}
+input:invalid:focus{
+    border:2px solid red;
+}
+.table{
+    border: 2px solid black;
+    margin:40px auto;
+}
+.td,
+.tr{
+    padding: 20px;
+    text-align: center;
+}
+.subheading{
+    text-align: center;
+}
