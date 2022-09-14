@@ -1,50 +1,73 @@
-body{
-    background: rgb(255, 234, 240);
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
-h1{
-    color: rgb(245, 87, 134);
-    font-size: 40px;
+body {
+  background-color: rgb(255, 234, 240);
 }
-.box{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 3rem;  
-    font-size:18px;
+.head {
+  margin-top: 1rem;
 }
-.form{
-    display: flex;
-    align-items: center;
-    padding: 20px;
+.box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 3rem;
 }
-.input{
-    margin-bottom: 10px;
-    padding: 10px 15px;
-    border-radius: 10px;
-    outline: none;
-    border: 2px solid rgba(0, 0, 0, 0.4);
+.form {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background-color: white;
+  width: 600px;
+  height: 500px;
+  box-shadow: 2px 4px 10px gray;
+  border: 1px solid black;
+  border-radius: 20px;
+  padding: 20px;
 }
-.button{
-    background-color: rgb(3, 77, 13);
-    padding: 10px 20px;
-    border-radius: 6px;
-    margin-top: 20px;
-    margin-left: 200px;
-    color: white;
-    font-size:medium
+.input {
+  padding: 10px 15px;
+  border: 2px solid rgba(0, 0, 0, 0.4);
+  font-size: 18px;
+  outline: none;
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.02);
 }
-input:invalid:focus{
-    border:2px solid red;
+label {
+  font-size: 18px;
+  letter-spacing: 1.4px;
 }
-.table{
-    border: 2px solid black;
-    margin:40px auto;
+.tableForm {
+  margin-top: 10px;
 }
+.button {
+  background-color: rgb(133, 185, 55);
+  color: white;
+  padding: 10px 20px;
+  font-size: large;
+  font-weight: 600;
+  border-radius: 10px;
+}
+
+input:invalid:focus {
+  border: 2px solid red;
+}
+
+.table {
+  border: 2px solid black;
+  margin: 40px auto;
+}
+
 .td,
-.tr{
-    padding: 20px;
-    text-align: center;
+.th {
+  padding: 10px;
+  text-align: center;
 }
-.subheading{
-    text-align: center;
+
+.subHead {
+  text-align: center;
+  margin-top: 2rem;
 }
