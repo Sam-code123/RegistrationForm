@@ -22,9 +22,9 @@ const displayEntries = () => {
       const email = `<td class="td">${entry.email}</td>`;
       const password = `<td class="td">${entry.password}</td>`;
       const dob = `<td class="td">${entry.dob}</td>`;
-      const accseptConditions = `<td class="td">${entry.accseptConditions}</td>`;
+      const acceptConditions = `<td class="td">${entry.acceptConditions}</td>`;
 
-      const row = `<tr>${name} ${email} ${password} ${dob} ${accseptConditions}</tr>`;
+      const row = `<tr>${name} ${email} ${password} ${dob} ${acceptConditions}</tr>`;
       return row;
     })
     .join("\n");
@@ -51,14 +51,14 @@ const saveUserFrom = (event) => {
   let email = document.getElementById("email").value;
   let password = document.getElementById("password").value;
   let dob = document.getElementById("dob").value;
-  let accseptConditions = document.getElementById("agree").checked;
+  let acceptConditions = document.getElementById("agree").checked;
 
   let entry_obj = {
     name,
     email,
     password,
     dob,
-    accseptConditions,
+    acceptConditions,
   };
 
   Entries.push(entry_obj);
